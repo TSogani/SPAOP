@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="com.aa.beans.Calculator" id="calculator" />
+	
+	<bean class="com.aa.beans.ScientificCalculator" id="scientificCalculator"/>
+	
+	<bean class="com.aa.aspect.loggingAspect" id="loggingAspect" />
+
+	<aop:config>
+		<aop:aspect ref="loggingAspect">
+			<aop:around method="log" pointcut="execution(* com.aa.beans.*.*(..))" />
+		</aop:aspect>
+	</aop:config>
+</beans>

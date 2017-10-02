@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean class="com.at.beans.Thrower" id="thrower"/>
+	<bean class="com.at.aspect.AfterThrowingAdvice" id="afterThrowingAdvice" />
+	
+	<aop:config>
+		<aop:aspect ref="afterThrowingAdvice">
+			<aop:after-throwing method="afterThrowing" pointcut="execution(* com.at.beans.*.willThrow(..))" throwing="iae"/>
+		</aop:aspect>
+	</aop:config>
+</beans>

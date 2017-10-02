@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean class="com.aa.beans.Calculator" id="calculator" />
+
+	<bean class="com.aa.aspect.loggingAspect" id="loggingAspect" />
+
+	<aop:config>
+		<aop:aspect ref="loggingAspect">
+			<aop:around method="log" pointcut="execution(* com.aa.beans.*.*(a,b))" />
+		</aop:aspect>
+	</aop:config>
+
+
+	<!-- <aop:config> <aop:aspect ref="loggingAspect"> execution (AccessModifier 
+		returnType packageName.targetClassName.methodName(arg,arg)) AccessModifier 
+		optional return type mandatory , we can use * mean anything its take package 
+		is mandatory , use * targetClassName Mandatory, use * method name is mandatory, 
+		use * mean all are allowed argument mandatory use (..) -->
+
+	<!-- <aop:around method="log"
+		pointcut="execution(public * com.aa.beans.*.*(..))" />
+	<aop:around method="log" pointcut="within (com.aa.beans.*) and args(x,y)" />
+	<aop:pointcut expression="execution(public 
+		* com.aa.beans.*.*(x,y))"
+		id="ref" />
+	<aop:around method="log" pointcut-ref="ref">
+	</aop:around> -->
+</aop:aspect>
+</aop:config>
+
+</beans>

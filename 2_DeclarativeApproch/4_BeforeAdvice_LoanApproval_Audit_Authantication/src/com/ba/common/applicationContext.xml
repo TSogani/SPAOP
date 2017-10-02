@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean class="com.ba.beans.LoanApprover" id="loanApprover" />
+	<bean class="com.ba.util.Cridential" id="cridential"/>
+	<bean class="com.ba.util.AuthManager" id="authManager" >
+		<property name="cridential" ref="cridential"/>
+	</bean>
+	<bean class="aspect.LoanApproverAuditAspect" id="loanApproverAuditAspect">
+		<property name="authManager" ref="authManager"/>
+	</bean>
+	<bean class="aspect.SecurityAspect" id="securityAspect">
+		<property name="authManager" ref="authManager"/>
+	</bean>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.ba.beans.*.*(..))" id="commonAspect"/>
+	<aop:aspect ref="securityAspect" >
+			<aop:before method="doCheck" pointcut-ref="commonAspect"/>
+		</aop:aspect>
+		<aop:aspect ref="loanApproverAuditAspect" >
+				<aop:before method="doAudit" pointcut-ref="commonAspect" />
+		</aop:aspect>
+		
+	</aop:config>
+	
+</beans>

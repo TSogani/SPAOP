@@ -1,0 +1,11 @@
+It have half control point.
+
+first control go to target class then if target class throw an exception then control go to 
+ThrowAdvice then control go to test class.
+
+we can not control controlpoint.
+
+If target class throws an exception then only control go to ThrowAdvice otherwise control
+not go to ThrowAdvice.
+
+we cannot abort control in ThrowAdvice.
